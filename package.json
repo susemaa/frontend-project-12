@@ -14,5 +14,8 @@
   "dependencies": {
     "@fastify/static": "^6.11.2",
     "@hexlet/chat-server": "^1.1.8"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
