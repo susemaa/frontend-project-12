@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Col } from 'react-bootstrap';
-import Header from './MessagesHeader';
-//import SendingWindow from './SendingWindow.jsx';
+import Header from './MessagesHeader.jsx';
+import SendingWindow from './SendingWindow.jsx';
 //import Message from './Message.jsx';
 
 const Messages = () => {
@@ -14,9 +14,7 @@ const Messages = () => {
       <div id="message-box" className="chat-messages overflow-auto px-5">
         MESSAGES
       </div>
-      <div className="mt-auto px-5 py-3">
-        SENDING BOX
-      </div>
+      <SendingWindow />
     </Col>
   );
 };

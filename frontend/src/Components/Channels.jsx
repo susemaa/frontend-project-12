@@ -19,7 +19,7 @@ const Channels = () => {
     <Col xs={4} md={2} className="border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 mb-2 ps-4 pe-2 p-4 justify-content-between align-items-center">
         <b>Каналы</b>
-        <Button className="p-0 text-primary rounded-0">
+        <Button className="p-0 text-primary rounded-0 border-0 bg-transparent" variant="outline-primary">
           <BsPlusSquare />
           <span className="visually-hidden">+</span>
         </Button>

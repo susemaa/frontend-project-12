@@ -49,6 +49,7 @@ const App = () => (
   <AuthProvider>
     <div className="d-flex flex-column h-100">
       {/* NAVBAR */}
+      NAVBAR
       <BrowserRouter>
         <Routes>
           <Route path="*" element={<Page404 />} />
