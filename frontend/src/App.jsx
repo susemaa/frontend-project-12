@@ -47,14 +47,16 @@ const PrivateRoute = ({ children }) => {
 
 const App = () => (
   <AuthProvider>
-    {/* SUSEMA CHAT HEADER */}
-    <BrowserRouter>
-      <Routes>
-        <Route path="*" element={<Page404 />} />
-        <Route path="/" element={<PrivateRoute><MainPage /></PrivateRoute>} />
-        <Route path="login" element={<LoginPage />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="d-flex flex-column h-100">
+      {/* NAVBAR */}
+      <BrowserRouter>
+        <Routes>
+          <Route path="*" element={<Page404 />} />
+          <Route path="/" element={<PrivateRoute><MainPage /></PrivateRoute>} />
+          <Route path="login" element={<LoginPage />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   </AuthProvider>
 );
 

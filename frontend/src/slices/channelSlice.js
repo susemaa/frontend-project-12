@@ -8,6 +8,7 @@ const getData = createAsyncThunk(
   async (header, { rejectWithValue }) => {
     try {
       const response = await axios.get(routes.data(), { headers: header });
+      console.log(response.data);
       return response.data;
     } catch (err) {
       return rejectWithValue(err);
@@ -21,7 +22,9 @@ const channelSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
-
+    setCurrentChannel: (state, { payload }) => {
+      state.currentChannelId = payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -42,5 +45,4 @@ const channelSlice = createSlice({
 const actions = { ...channelSlice.actions, getData };
 
 export { actions };
-
 export default channelSlice.reducer;
