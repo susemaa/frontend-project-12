@@ -4,9 +4,11 @@ import {
   Form, Button, InputGroup, Container,
 } from 'react-bootstrap';
 import { BsArrowRightSquare } from 'react-icons/bs';
-import * as yup from 'yup';
+import { useAuth, useSocket } from '../hooks/index.jsx';
 
-const SendingWindow = () => {
+const SendingWindow = ({ currentChannel }) => {
+  const { user } = useAuth();
+  const socket = useSocket();
   const messageRef = useRef(null);
   useEffect(() => {
     messageRef.current.focus();
@@ -16,12 +18,26 @@ const SendingWindow = () => {
     initialValues: {
       text: '',
     },
+    onSubmit: async ({ text }) => {
+      const message = {
+        body: text,
+        channelId: currentChannel.id,
+        username: user.username,
+      };
+      try {
+        await socket.sendMessage(message);
+        formik.values.text = '';
+      } catch (err) {
+        console.log(err);
+      }
+    },
   });
   return (
     <Container className="mt-auto px-5 py-3">
       <Form
         noValidate
         className="py-1 border rounded-2"
+        onSubmit={formik.handleSubmit}
       >
         <InputGroup>
           <Form.Control

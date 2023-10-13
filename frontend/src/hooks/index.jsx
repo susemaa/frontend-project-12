@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 
-import AuthContext from '../contexts/index.jsx';
+import { AuthContext, SocketContext } from '../contexts/index.jsx';
 
 const useAuth = () => useContext(AuthContext);
+const useSocket = () => useContext(SocketContext);
 
-export default useAuth;
+export { useAuth, useSocket };

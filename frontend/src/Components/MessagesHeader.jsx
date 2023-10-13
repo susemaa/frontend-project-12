@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = ({ currentChannel }) => {
+const Header = ({ currentChannel, messagesAmount }) => {
   const channelName = currentChannel ? currentChannel.name : null;
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">
@@ -11,7 +11,7 @@ const Header = ({ currentChannel }) => {
         </b>
       </p>
       <span className="text-muted">
-        zxc
+        {messagesAmount}
       </span>
     </div>
   );

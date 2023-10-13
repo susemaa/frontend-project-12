@@ -3,7 +3,7 @@ import { Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 import { actions } from '../slices/index.js';
 
 const MainPage = () => {

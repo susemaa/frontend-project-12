@@ -5,8 +5,8 @@ import {
 import { Page404 } from './Components/Pages.jsx';
 import MainPage from './Components/Main.jsx';
 import LoginPage from './Components/Login.jsx';
-import AuthContext from './contexts/index.jsx';
-import useAuth from './hooks/index.jsx';
+import { AuthContext } from './contexts/index.jsx';
+import { useAuth } from './hooks/index.jsx';
 import routes from './routes.js';
 
 const AuthProvider = ({ children }) => {
