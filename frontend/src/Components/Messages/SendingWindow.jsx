@@ -4,7 +4,7 @@ import {
   Form, Button, InputGroup, Container,
 } from 'react-bootstrap';
 import { BsArrowRightSquare } from 'react-icons/bs';
-import { useAuth, useSocket } from '../hooks/index.jsx';
+import { useAuth, useSocket } from '../../hooks/index.jsx';
 
 const SendingWindow = ({ currentChannel }) => {
   const { user } = useAuth();

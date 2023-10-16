@@ -14,20 +14,25 @@ const SocketProvider = ({ children }) => {
   webSocket.on('newMessage', (payload) => {
     dispatch(actions.addMessage(payload));
   });
+  webSocket.on('newChannel', (payload) => {
+    dispatch(actions.addChannel(payload));
+  });
 
   const promisify = (...args) => new Promise((resolve, reject) => {
     webSocket.emit(...args, (response) => {
       if (response.status === 'ok') {
-        resolve();
+        resolve(response.data);
       }
       reject();
     })
   });
 
   const sendMessage = (message) => promisify('newMessage', message);
+  const newChannel = (channelName) => promisify('newChannel', channelName);
 
   const socketServices = {
     sendMessage,
+    newChannel
   };
 
   return (

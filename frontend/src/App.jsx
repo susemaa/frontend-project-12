@@ -2,7 +2,7 @@ import React, { useState, useMemo, useCallback } from 'react';
 import {
   BrowserRouter, Routes, Route, Navigate,
 } from 'react-router-dom';
-import { Page404 } from './Components/Pages.jsx';
+import Page404 from './Components/Pages.jsx';
 import MainPage from './Components/Main.jsx';
 import LoginPage from './Components/Login.jsx';
 import { AuthContext } from './contexts/index.jsx';

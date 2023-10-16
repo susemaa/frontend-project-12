@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Channels from './Channels.jsx';
-import Messages from './Messages.jsx';
+import Messages from './Messages/index.jsx';
 import { useAuth } from '../hooks/index.jsx';
 import { actions } from '../slices/index.js';
 
