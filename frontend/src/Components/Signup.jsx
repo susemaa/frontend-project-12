@@ -14,15 +14,10 @@ import * as yup from 'yup';
 import axios from 'axios';
 import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
-import logo from '../123.png';
+import signUpLogo from '../124.png';
 
-const validationSchema = yup.object({
-  username: yup.string().required('Username is required'),
-  password: yup.string().required('Password is required'),
-});
-
-const LoginPage = () => {
-  const [authFailed, setAuthFailed] = useState(false);
+const SignUpPage = () => {
+  const [signUpFailed, setSighUpFailed] = useState(false);
   const navigate = useNavigate();
   const auth = useAuth();
 
@@ -30,22 +25,35 @@ const LoginPage = () => {
     initialValues: {
       username: '',
       password: '',
+      passwordConfirmation: '',
     },
-    validationSchema,
     onSubmit: async (values) => {
       console.log(values);
       const { username, password } = values;
       try {
-        const res = await axios.post(routes.login(), { username, password }); // => { token: ..., username }
-        setAuthFailed(false);
+        const res = await axios.post(routes.signup(), { username, password }); // => { token: ..., username }
+        setSighUpFailed(false);
         auth.logIn(res.data);
         navigate('/');
       } catch (err) {
         formik.setSubmitting(false);
-        setAuthFailed(true);
+        setSighUpFailed(true);
         console.log(err);
       }
     },
+    validationSchema: yup.object().shape({
+      username: yup.string()
+        .trim()
+        .min(3, 'Username is too short - 3 characters minimum')
+        .max(20, 'Username is too long - 20 characters maximum')
+        .required('Username is required'),
+      password: yup.string()
+        .trim()
+        .min(6, 'Password is too short - 6 characters minimum')
+        .required('Password is required'),
+      passwordConfirmation: yup.string()
+        .oneOf([yup.ref('password'), null], 'Passwords must match'),
+    }),
   });
 
   return (
@@ -57,7 +65,7 @@ const LoginPage = () => {
               <Row>
                 <Col>
                   <div className="text-center">
-                    <img src={logo} className="rounded-circle w-100 h-100" alt="Welcome" />
+                    <img src={signUpLogo} className="rounded-circle w-100 h-100" alt="SignUp" />
                   </div>
                 </Col>
                 <Col>
@@ -73,9 +81,10 @@ const LoginPage = () => {
                           required
                           onChange={formik.handleChange}
                           value={formik.values.username}
-                          isInvalid={authFailed}
+                          isInvalid={!!formik.errors.username}
                         />
                         <Form.Label>Ваш ник</Form.Label>
+                        <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
                       </Form.Group>
 
                       <Form.Group className="form-floating mb-4" controlId="password">
@@ -87,15 +96,30 @@ const LoginPage = () => {
                           required
                           onChange={formik.handleChange}
                           value={formik.values.password}
-                          isInvalid={authFailed}
+                          isInvalid={!!formik.errors.password}
                         />
                         <Form.Label>Пароль</Form.Label>
-                        <Form.Control.Feedback type="invalid">Неверные имя пользователя или пароль</Form.Control.Feedback>
+                        <Form.Control.Feedback type="invalid">{formik.errors.password}</Form.Control.Feedback>
                       </Form.Group>
 
-                      <div className="text-center mb-4">
+                      <Form.Group className="form-floating mb-4" controlId="passwordConfirmation">
+                        <Form.Control
+                          name="passwordConfirmation"
+                          type="password"
+                          placeholder="Подтверждение парля"
+                          autoComplete="current-passwordConfirmation"
+                          required
+                          onChange={formik.handleChange}
+                          value={formik.values.passwordConfirmation}
+                          isInvalid={!!formik.errors.passwordConfirmation}
+                        />
+                        <Form.Label>Подтверждение пароля</Form.Label>
+                        <Form.Control.Feedback type="invalid">{formik.errors.passwordConfirmation}</Form.Control.Feedback>
+                      </Form.Group>
+
+                      <div className="text-center mb-4 h-100">
                         <Button variant="outline-primary" type="submit">
-                          Войти
+                          Зарегистрироваться
                         </Button>
                       </div>
                     </Form>
@@ -105,8 +129,8 @@ const LoginPage = () => {
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span className="me-1">Нет аккаунта?</span>
-                <Link to="/signup">Регистрация</Link>
+                <span className="me-1">Уже есть аккаунт?</span>
+                <Link to="/login">Войти</Link>
               </div>
             </Card.Footer>
           </Card>
@@ -116,4 +140,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignUpPage;

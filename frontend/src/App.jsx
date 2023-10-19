@@ -2,12 +2,13 @@ import React, { useState, useMemo, useCallback } from 'react';
 import {
   BrowserRouter, Routes, Route, Navigate,
 } from 'react-router-dom';
-import Page404 from './Components/Pages.jsx';
+import Page404 from './Components/Page404.jsx';
 import MainPage from './Components/Main.jsx';
 import LoginPage from './Components/Login.jsx';
 import { AuthContext } from './contexts/index.jsx';
 import { useAuth } from './hooks/index.jsx';
 import routes from './routes.js';
+import SignUpPage from './Components/Signup.jsx';
 
 const AuthProvider = ({ children }) => {
   const savedUserData = JSON.parse(localStorage.getItem('userInfo'));
@@ -55,6 +56,7 @@ const App = () => (
           <Route path="*" element={<Page404 />} />
           <Route path="/" element={<PrivateRoute><MainPage /></PrivateRoute>} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignUpPage />} />
         </Routes>
       </BrowserRouter>
     </div>

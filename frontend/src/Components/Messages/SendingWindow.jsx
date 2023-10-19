@@ -50,6 +50,7 @@ const SendingWindow = ({ currentChannel }) => {
             className="border-0 p-0 ps-2"
             value={formik.values.text}
             onChange={formik.handleChange}
+            disabled={formik.isSubmitting}
             required
           />
           <Button
