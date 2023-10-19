@@ -9,12 +9,7 @@ import { useAuth, useSocket } from '../../hooks/index.jsx';
 const SendingWindow = ({ currentChannel }) => {
   const { user } = useAuth();
   const socket = useSocket();
-
   const msgRef = useRef(null);
-
-  useEffect(() => {
-    msgRef.current.focus();
-  }, [currentChannel]);
 
   const formik = useFormik({
     initialValues: {
@@ -34,6 +29,11 @@ const SendingWindow = ({ currentChannel }) => {
       }
     },
   });
+
+  useEffect(() => {
+    msgRef.current.focus();
+  }, [currentChannel, formik.isSubmitting]);
+
   return (
     <Container className="mt-auto px-5 py-3">
       <Form
