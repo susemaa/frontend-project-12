@@ -47,17 +47,47 @@ const Channels = () => {
           activeKey={currentChannelId}
         >
           {channels.map((channel) => {
-            const { id, name } = channel;
+            const { id, name, removable } = channel;
+            if (!removable) {
+              return (
+                <Nav.Item className="w-100" key={id} as="li">
+                  <Button
+                    className="w-100 rounded-0 text-start text-truncate"
+                    variant={id === currentChannelId ? 'secondary' : 'light'}
+                    onClick={() => handleClick(id)}
+                  >
+                    <span className="me-1">#</span>
+                    {name}
+                  </Button>
+                </Nav.Item>
+              );
+            }
             return (
               <Nav.Item className="w-100" key={id} as="li">
-                <Button
-                  className="w-100 rounded-0 text-start text-truncate"
-                  variant={id === currentChannelId ? 'secondary' : 'light'}
-                  onClick={() => handleClick(id)}
-                >
-                  <span className="me-1">#</span>
-                  {name}
-                </Button>
+                <Dropdown as={ButtonGroup} className="d-flex">
+                  <Button
+                    className="w-100 rounded-0 text-start text-truncate"
+                    variant={id === currentChannelId ? 'secondary' : 'light'}
+                    onClick={() => handleClick(id)}
+                  >
+                    <span className="me-1">#</span>
+                    {name}
+                  </Button>
+
+                  <Dropdown.Toggle
+                    split
+                    className="flex-grow-0 border-0"
+                    id="dropdown-split-basic"
+                    variant={id === currentChannelId ? 'secondary' : 'light'}
+                  >
+                    <span className="visually-hidden">Управление каналом</span>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#" onClick={() => openModal('remove', channel)}>Remove</Dropdown.Item>
+                    <Dropdown.Item href="#" onClick={() => openModal('rename', channel)}>Rename</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </Nav.Item>
             );
           })}

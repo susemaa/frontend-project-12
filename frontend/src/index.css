@@ -4,3 +4,10 @@ html, body {
   padding: 0;
   overflow: hidden;
 }
+
+.dropdown-item:active {
+  color: #fff;
+  background-color: #565e64;
+  border-color: #51585e;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}

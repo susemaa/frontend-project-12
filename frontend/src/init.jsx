@@ -17,6 +17,12 @@ const SocketProvider = ({ children }) => {
   webSocket.on('newChannel', (payload) => {
     dispatch(actions.addChannel(payload));
   });
+  webSocket.on('removeChannel', (payload) => {
+    dispatch(actions.removeChannel(payload));
+  });
+  webSocket.on('renameChannel', (payload) => {
+    dispatch(actions.renameChannel(payload));
+  });
 
   const promisify = (...args) => new Promise((resolve, reject) => {
     webSocket.emit(...args, (response) => {
@@ -29,10 +35,14 @@ const SocketProvider = ({ children }) => {
 
   const sendMessage = (message) => promisify('newMessage', message);
   const newChannel = (channelName) => promisify('newChannel', channelName);
+  const removeChannel = (channel) => promisify('removeChannel', channel);
+  const renameChannel = (channel) => promisify('renameChannel', channel);
 
   const socketServices = {
     sendMessage,
-    newChannel
+    newChannel,
+    removeChannel,
+    renameChannel,
   };
 
   return (

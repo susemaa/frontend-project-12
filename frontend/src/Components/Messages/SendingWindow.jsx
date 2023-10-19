@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import {
   Form, Button, InputGroup, Container,
@@ -9,10 +9,12 @@ import { useAuth, useSocket } from '../../hooks/index.jsx';
 const SendingWindow = ({ currentChannel }) => {
   const { user } = useAuth();
   const socket = useSocket();
-  const messageRef = useRef(null);
+
+  const msgRef = useRef(null);
+
   useEffect(() => {
-    messageRef.current.focus();
-  }, []);
+    msgRef.current.focus();
+  }, [currentChannel]);
 
   const formik = useFormik({
     initialValues: {
@@ -42,7 +44,7 @@ const SendingWindow = ({ currentChannel }) => {
         <InputGroup>
           <Form.Control
             name="text"
-            ref={messageRef}
+            ref={msgRef}
             aria-label="Новое сообщение"
             placeholder="Введите сообщение..."
             className="border-0 p-0 ps-2"

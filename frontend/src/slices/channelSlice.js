@@ -28,6 +28,15 @@ const channelSlice = createSlice({
     addChannel: (state, { payload }) => {
       state.channels.push(payload);
     },
+    removeChannel: (state, { payload }) => {
+      const { id } = payload;
+      state.channels = state.channels.filter((channel) => channel.id !== id);
+    },
+    renameChannel: (state, { payload }) => {
+      const { id, name } = payload;
+      state.channels = state.channels
+        .map((channel) => (channel.id === id ? { ...channel, name } : channel));
+    },
   },
   extraReducers: (builder) => {
     builder
