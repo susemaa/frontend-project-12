@@ -1,5 +1,7 @@
 export default {
   translation: {
+    loading: 'Загрузка...',
+    changeLanguage: 'Сменить язык',
     buttons: {
       logOut: 'Выйти',
       cancel: 'Отменить',
@@ -11,7 +13,6 @@ export default {
     errors: {
       404: 'Страница не найдена',
     },
-    loading: 'Загрузка...',
     channels: {
       channels: 'Каналы',
       addChannel: 'Добавить канал',
@@ -38,7 +39,6 @@ export default {
       noAccount: 'Нет аккаунта?',
       haveAccount: 'Уже есть аккаунт?',
       signup: 'Регистрация',
-      exists: 'Такой пользователь уже существует',
     },
     validation: {
       exists: 'Такой пользователь уже сущуствует',

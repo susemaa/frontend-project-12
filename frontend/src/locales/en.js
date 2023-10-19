@@ -1,0 +1,51 @@
+export default {
+  translation: {
+    loading: 'Loading...',
+    changeLanguage: 'Change language',
+    buttons: {
+      logOut: 'LogOut',
+      cancel: 'Cancel',
+      send: 'Send',
+      remove: 'Remove',
+      rename: 'Rename',
+      signup: 'Sign up',
+    },
+    errors: {
+      404: 'Page not found',
+    },
+    channels: {
+      channels: 'Channels',
+      addChannel: 'Add channel',
+      channelsName: 'Channel`s name',
+      newChannelName: 'New channel`s name',
+      edit: 'Edit channel',
+      removeChannel: 'Remove channel',
+      renameChannel: 'Rename channel',
+      isSure: 'Are you sure?',
+    },
+    messages: {
+      enter: 'Enter your message...',
+      newMessage: 'New message',
+      amount_one: '{{count}} message',
+      amount_other: '{{count}} messages',
+    },
+    forms: {
+      login: 'Log in',
+      username: 'Your username',
+      password: 'Password',
+      passwordConfirmation: 'Password confirnation',
+      invalidLogin: 'Username or password are wrong',
+      noAccount: 'Don`t have an account?',
+      haveAccount: 'Already have an account?',
+      signup: 'Sign up',
+    },
+    validation: {
+      exists: 'This username is already taken',
+      required: 'Required field',
+      min: 'From 3 to 20 characters',
+      max: 'From 3 to 20 characters',
+      minPassword: 'At least 6 characters',
+      passwordConfirmation: 'Passwords must match',
+    },
+  },
+};
