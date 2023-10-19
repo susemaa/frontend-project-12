@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Container,
   Row,
@@ -25,6 +25,11 @@ const LoginPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
   const auth = useAuth();
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -36,7 +41,7 @@ const LoginPage = () => {
       console.log(values);
       const { username, password } = values;
       try {
-        const res = await axios.post(routes.login(), { username, password }); // => { token: ..., username }
+        const res = await axios.post(routes.login(), { username, password });
         setAuthFailed(false);
         auth.logIn(res.data);
         navigate('/');
@@ -74,6 +79,7 @@ const LoginPage = () => {
                           onChange={formik.handleChange}
                           value={formik.values.username}
                           isInvalid={authFailed}
+                          ref={inputRef}
                         />
                         <Form.Label>Ваш ник</Form.Label>
                       </Form.Group>

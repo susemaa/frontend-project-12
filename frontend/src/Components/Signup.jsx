@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Container,
   Row,
@@ -20,6 +20,11 @@ const SignUpPage = () => {
   const [signUpFailed, setSighUpFailed] = useState(false);
   const navigate = useNavigate();
   const auth = useAuth();
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -28,7 +33,6 @@ const SignUpPage = () => {
       passwordConfirmation: '',
     },
     onSubmit: async (values) => {
-      console.log(values);
       const { username, password } = values;
       try {
         const res = await axios.post(routes.signup(), { username, password });
@@ -39,6 +43,9 @@ const SignUpPage = () => {
         formik.setSubmitting(false);
         setSighUpFailed(true);
         console.log(err);
+        if (err.response.status === 409) {
+          alert('This username already exists');
+        }
       }
     },
     validationSchema: yup.object().shape({
@@ -81,7 +88,9 @@ const SignUpPage = () => {
                           required
                           onChange={formik.handleChange}
                           value={formik.values.username}
-                          isInvalid={(formik.touched.username && !!formik.errors.username)}
+                          isInvalid={(formik.touched.username || formik.errors.username)
+                            || signUpFailed}
+                          ref={inputRef}
                         />
                         <Form.Label>Ваш ник</Form.Label>
                         <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
@@ -96,7 +105,7 @@ const SignUpPage = () => {
                           required
                           onChange={formik.handleChange}
                           value={formik.values.password}
-                          isInvalid={(formik.touched.password && !!formik.errors.password)}
+                          isInvalid={(formik.touched.password || formik.errors.password)}
                         />
                         <Form.Label>Пароль</Form.Label>
                         <Form.Control.Feedback type="invalid">{formik.errors.password}</Form.Control.Feedback>
@@ -112,7 +121,7 @@ const SignUpPage = () => {
                           onChange={formik.handleChange}
                           value={formik.values.passwordConfirmation}
                           isInvalid={(formik.touched.passwordConfirmation
-                            && !!formik.errors.passwordConfirmation)}
+                            || formik.errors.passwordConfirmation)}
                         />
                         <Form.Label>Подтверждение пароля</Form.Label>
                         <Form.Control.Feedback type="invalid">{formik.errors.passwordConfirmation}</Form.Control.Feedback>

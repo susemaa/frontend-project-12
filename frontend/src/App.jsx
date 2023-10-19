@@ -5,6 +5,7 @@ import {
 import Page404 from './Components/Page404.jsx';
 import MainPage from './Components/Main.jsx';
 import LoginPage from './Components/Login.jsx';
+import MyNavbar from './Components/Navbar.jsx';
 import { AuthContext } from './contexts/index.jsx';
 import { useAuth } from './hooks/index.jsx';
 import routes from './routes.js';
@@ -49,8 +50,7 @@ const PrivateRoute = ({ children }) => {
 const App = () => (
   <AuthProvider>
     <div className="d-flex flex-column h-100">
-      {/* NAVBAR */}
-      NAVBAR
+      <MyNavbar />
       <BrowserRouter>
         <Routes>
           <Route path="*" element={<Page404 />} />
