@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { ImSpinner2 } from 'react-icons/im';
 import Channels from './Channels.jsx';
 import Messages from './Messages/index.jsx';
 import { useAuth } from '../hooks/index.jsx';
@@ -9,6 +11,7 @@ import { actions } from '../slices/index.js';
 const MainPage = () => {
   const auth = useAuth();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const channelsInfo = useSelector((s) => s.channelsInfo);
   const messagesInfo = useSelector((s) => s.messagesInfo);
 
@@ -27,11 +30,10 @@ const MainPage = () => {
 
   if (channelsInfo.loading) {
     return (
-      <Container className="h-100 my-4 overflow-hidden rounded shadow">
-        <div className="row h-100 bg-white flex-md-row">
-          <h1>loading</h1>
-        </div>
-      </Container>
+      <div className="h-100 d-flex justify-content-center align-items-center spin">
+        <ImSpinner2 />
+        <span className="visually-hidden">{t('lodaing')}</span>
+      </div>
     );
   }
 

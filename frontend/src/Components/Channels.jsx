@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   Nav, Button, Dropdown, ButtonGroup, Col,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { BsPlusSquare } from 'react-icons/bs';
 import { actions } from '../slices/index.js';
 import selectModal from './Modals/index.js';
@@ -17,6 +18,7 @@ const ModalWindow = ({ modalInfo, handleClose }) => {
 };
 
 const Channels = () => {
+  const { t } = useTranslation();
   const channelsInfo = useSelector((s) => s.channelsInfo);
   const { channels, currentChannelId } = channelsInfo;
 
@@ -34,10 +36,10 @@ const Channels = () => {
     <>
       <Col xs={4} md={2} className="border-end px-0 bg-light flex-column h-100 d-flex">
         <div className="d-flex mt-1 mb-2 ps-4 pe-2 p-4 justify-content-between align-items-center">
-          <b>Каналы</b>
+          <b>{t('channels.channels')}</b>
           <Button className="p-0 text-primary rounded-0 border-0 bg-transparent" variant="outline-primary" onClick={() => openModal('add')}>
             <BsPlusSquare />
-            <span className="visually-hidden">+</span>
+            <span className="visually-hidden">{t('channels.addChannel')}</span>
           </Button>
         </div>
         <Nav
@@ -80,12 +82,12 @@ const Channels = () => {
                     id="dropdown-split-basic"
                     variant={id === currentChannelId ? 'secondary' : 'light'}
                   >
-                    <span className="visually-hidden">Управление каналом</span>
+                    <span className="visually-hidden">{t('channels.edit')}</span>
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#" onClick={() => openModal('remove', channel)}>Remove</Dropdown.Item>
-                    <Dropdown.Item href="#" onClick={() => openModal('rename', channel)}>Rename</Dropdown.Item>
+                    <Dropdown.Item href="#" onClick={() => openModal('remove', channel)}>{t('buttons.remove')}</Dropdown.Item>
+                    <Dropdown.Item href="#" onClick={() => openModal('rename', channel)}>{t('buttons.rename')}</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </Nav.Item>

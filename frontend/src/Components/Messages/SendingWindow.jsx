@@ -3,10 +3,12 @@ import { useFormik } from 'formik';
 import {
   Form, Button, InputGroup, Container,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { BsArrowRightSquare } from 'react-icons/bs';
 import { useAuth, useSocket } from '../../hooks/index.jsx';
 
 const SendingWindow = ({ currentChannel }) => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const socket = useSocket();
   const msgRef = useRef(null);
@@ -45,8 +47,8 @@ const SendingWindow = ({ currentChannel }) => {
           <Form.Control
             name="text"
             ref={msgRef}
-            aria-label="Новое сообщение"
-            placeholder="Введите сообщение..."
+            aria-label={t('messages.newMessage')}
+            placeholder={t('messages.enter')}
             className="border-0 p-0 ps-2"
             value={formik.values.text}
             onChange={formik.handleChange}
@@ -59,7 +61,7 @@ const SendingWindow = ({ currentChannel }) => {
             disabled={formik.isSubmitting || formik.values.text.length === 0}
           >
             <BsArrowRightSquare size={20} />
-            <span className="visually-hidden">Отправить</span>
+            <span className="visually-hidden">{t('buttons.send')}</span>
           </Button>
         </InputGroup>
       </Form>

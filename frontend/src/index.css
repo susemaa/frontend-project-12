@@ -11,3 +11,12 @@ html, body {
   border-color: #51585e;
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}

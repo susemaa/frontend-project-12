@@ -2,10 +2,13 @@ import React from 'react';
 import io from 'socket.io-client';
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, Provider } from 'react-redux';
+import i18next from 'i18next';
+import { initReactI18next, I18nextProvider } from 'react-i18next';
 import { actions } from './slices/index.js';
 import { SocketContext } from './contexts/index.jsx';
 import App from './App.jsx';
 import reducer from './slices/index.js';
+import resources from './locales/index.js';
 
 const SocketProvider = ({ children }) => {
   const webSocket = io();
@@ -54,11 +57,25 @@ const SocketProvider = ({ children }) => {
 
 const init = async () => {
   const store = configureStore({ reducer });
+
+  const i18n = i18next.createInstance();
+  i18n
+    .use(initReactI18next)
+    .init({
+      resources,
+      fallbackLng: 'ru', 
+      interpolation: {
+        escapeValue: false, // экранирование уже есть в React, поэтому отключаем
+      },
+    });
+    
   return (
     <Provider store={store}>
-      <SocketProvider>
-        <App />
-      </SocketProvider>
+      <I18nextProvider i18n={i18n}>
+        <SocketProvider>
+          <App />
+        </SocketProvider>
+      </I18nextProvider>
     </Provider>
   )
 };

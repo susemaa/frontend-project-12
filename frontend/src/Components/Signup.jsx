@@ -12,15 +12,19 @@ import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
 import signUpLogo from '../124.png';
 
 const SignUpPage = () => {
   const [signUpFailed, setSighUpFailed] = useState(false);
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const auth = useAuth();
   const inputRef = useRef(null);
+
+  const [existingUsernames, setExistingUsernames] = useState([]);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -34,34 +38,40 @@ const SignUpPage = () => {
     },
     onSubmit: async (values) => {
       const { username, password } = values;
+      setSighUpFailed(false);
       try {
         const res = await axios.post(routes.signup(), { username, password });
-        setSighUpFailed(false);
         auth.logIn(res.data);
         navigate('/');
       } catch (err) {
         formik.setSubmitting(false);
         setSighUpFailed(true);
-        console.log(err);
         if (err.response.status === 409) {
-          alert('This username already exists');
+          setExistingUsernames([...existingUsernames, username]);
         }
       }
     },
     validationSchema: yup.object().shape({
       username: yup.string()
         .trim()
-        .min(3, 'Username is too short - 3 characters minimum')
-        .max(20, 'Username is too long - 20 characters maximum')
-        .required('Username is required'),
+        .min(3, t('validation.min'))
+        .max(20, t('validation.max'))
+        .required(t('validation.required')),
       password: yup.string()
         .trim()
-        .min(6, 'Password is too short - 6 characters minimum')
-        .required('Password is required'),
+        .min(6, t('validation.minPassword'))
+        .required(t('validation.required')),
       passwordConfirmation: yup.string()
-        .oneOf([yup.ref('password'), null], 'Passwords must match'),
+        .oneOf([yup.ref('password'), null], t('validation.passwordConfirmation')),
     }),
   });
+
+  const handleExisting = () => {
+    if (existingUsernames.find((username) => username === formik.values.username)) {
+      return (t('validation.exists'))
+    }
+    return;
+  }
 
   return (
     <Container fluid className="h-100 mt-5">
@@ -78,12 +88,12 @@ const SignUpPage = () => {
                 <Col>
                   <fieldset disabled={formik.isSubmitting}>
                     <Form onSubmit={formik.handleSubmit}>
-                      <h1 className="text-center mb-4">Войти</h1>
+                      <h1 className="text-center mb-4">{t('forms.signup')}</h1>
                       <Form.Group className="form-floating mb-3" controlId="username">
                         <Form.Control
                           name="username"
                           type="text"
-                          placeholder="Ваш ник"
+                          placeholder={t('forms.username')}
                           autoComplete="username"
                           required
                           onChange={formik.handleChange}
@@ -92,22 +102,25 @@ const SignUpPage = () => {
                             || signUpFailed}
                           ref={inputRef}
                         />
-                        <Form.Label>Ваш ник</Form.Label>
-                        <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
+                        <Form.Label>{t('forms.username')}</Form.Label>
+                        <Form.Control.Feedback type="invalid">
+                          {handleExisting()}
+                          {formik.errors.username}
+                        </Form.Control.Feedback>
                       </Form.Group>
 
                       <Form.Group className="form-floating mb-4" controlId="password">
                         <Form.Control
                           name="password"
                           type="password"
-                          placeholder="Пароль"
+                          placeholder={t('forms.password')}
                           autoComplete="current-password"
                           required
                           onChange={formik.handleChange}
                           value={formik.values.password}
                           isInvalid={(formik.touched.password || formik.errors.password)}
                         />
-                        <Form.Label>Пароль</Form.Label>
+                        <Form.Label>{t('forms.password')}</Form.Label>
                         <Form.Control.Feedback type="invalid">{formik.errors.password}</Form.Control.Feedback>
                       </Form.Group>
 
@@ -115,7 +128,7 @@ const SignUpPage = () => {
                         <Form.Control
                           name="passwordConfirmation"
                           type="password"
-                          placeholder="Подтверждение парля"
+                          placeholder={t('forms.passwordConfirmation')}
                           autoComplete="current-passwordConfirmation"
                           required
                           onChange={formik.handleChange}
@@ -123,13 +136,13 @@ const SignUpPage = () => {
                           isInvalid={(formik.touched.passwordConfirmation
                             || formik.errors.passwordConfirmation)}
                         />
-                        <Form.Label>Подтверждение пароля</Form.Label>
+                        <Form.Label>{t('forms.passwordConfirmation')}</Form.Label>
                         <Form.Control.Feedback type="invalid">{formik.errors.passwordConfirmation}</Form.Control.Feedback>
                       </Form.Group>
 
-                      <div className="text-center mb-4 h-100">
-                        <Button variant="outline-primary" type="submit">
-                          Зарегистрироваться
+                      <div className="text-center mb-4 w-100">
+                        <Button variant="outline-primary" type="submit" className="w-100">
+                          {t('buttons.signup')}
                         </Button>
                       </div>
                     </Form>
@@ -139,8 +152,8 @@ const SignUpPage = () => {
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span className="me-1">Уже есть аккаунт?</span>
-                <Link to="/login">Войти</Link>
+                <span className="me-1">{t('forms.haveAccount')}</span>
+                <Link to="/login">{t('forms.login')}</Link>
               </div>
             </Card.Footer>
           </Card>
