@@ -31,7 +31,7 @@ const SignUpPage = () => {
       console.log(values);
       const { username, password } = values;
       try {
-        const res = await axios.post(routes.signup(), { username, password }); // => { token: ..., username }
+        const res = await axios.post(routes.signup(), { username, password });
         setSighUpFailed(false);
         auth.logIn(res.data);
         navigate('/');
@@ -81,7 +81,7 @@ const SignUpPage = () => {
                           required
                           onChange={formik.handleChange}
                           value={formik.values.username}
-                          isInvalid={!!formik.errors.username}
+                          isInvalid={(formik.touched.username && !!formik.errors.username)}
                         />
                         <Form.Label>Ваш ник</Form.Label>
                         <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
@@ -96,7 +96,7 @@ const SignUpPage = () => {
                           required
                           onChange={formik.handleChange}
                           value={formik.values.password}
-                          isInvalid={!!formik.errors.password}
+                          isInvalid={(formik.touched.password && !!formik.errors.password)}
                         />
                         <Form.Label>Пароль</Form.Label>
                         <Form.Control.Feedback type="invalid">{formik.errors.password}</Form.Control.Feedback>
@@ -111,7 +111,8 @@ const SignUpPage = () => {
                           required
                           onChange={formik.handleChange}
                           value={formik.values.passwordConfirmation}
-                          isInvalid={!!formik.errors.passwordConfirmation}
+                          isInvalid={(formik.touched.passwordConfirmation
+                            && !!formik.errors.passwordConfirmation)}
                         />
                         <Form.Label>Подтверждение пароля</Form.Label>
                         <Form.Control.Feedback type="invalid">{formik.errors.passwordConfirmation}</Form.Control.Feedback>
