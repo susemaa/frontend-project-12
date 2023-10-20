@@ -51,6 +51,9 @@ const LoginPage = () => {
       } catch (err) {
         formik.setSubmitting(false);
         setAuthFailed(true);
+        if (err.response.status === 401) {
+          return;
+        }
         if (err.isAxiosError) {
           toast.error(t('toast.networkError'));
           return;

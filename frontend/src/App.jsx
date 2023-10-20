@@ -14,14 +14,12 @@ import SignUpPage from './Components/Signup.jsx';
 
 const AuthProvider = ({ children }) => {
   const savedUserData = JSON.parse(localStorage.getItem('userInfo'));
-  console.log('123', savedUserData);
 
   const [user, setUser] = useState(
     savedUserData ? { username: savedUserData.username, token: savedUserData.token } : null,
   );
 
   const logIn = useCallback((userData) => {
-    console.log(userData);
     localStorage.setItem('userInfo', JSON.stringify(userData));
     setUser({ username: userData.username, token: userData.token });
   }, []);

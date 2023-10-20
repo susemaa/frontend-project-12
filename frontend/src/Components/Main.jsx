@@ -14,7 +14,6 @@ const MainPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const channelsInfo = useSelector((s) => s.channelsInfo);
-  const messagesInfo = useSelector((s) => s.messagesInfo);
 
   useEffect(() => {
     const getData = async () => {
@@ -33,7 +32,6 @@ const MainPage = () => {
     };
 
     getData();
-    console.log('useSelector', channelsInfo, messagesInfo);
   }, [auth, dispatch]);
 
   if (channelsInfo.loading) {
