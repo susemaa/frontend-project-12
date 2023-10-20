@@ -70,7 +70,8 @@ const RemoveChannelModal = ({ onHide, modalInfo }) => {
               isInvalid={!!formik.errors.name}
             />
             <label htmlFor="name" className="visually-hidden">{t('channels.channelsName')}</label>
-            <Form.Label visuallyHidden htmlFor="name">{t('channels.channelsName')}</Form.Label>
+            {// <Form.Label visuallyHidden htmlFor="name">{t('channels.channelsName')}</Form.Label>
+            }
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>
