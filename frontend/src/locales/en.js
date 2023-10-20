@@ -32,6 +32,7 @@ export default {
     forms: {
       login: 'Log in',
       username: 'Username',
+      newUsername: 'Username',
       password: 'Password',
       passwordConfirmation: 'Password confirnation',
       invalidLogin: 'Username or password are wrong',

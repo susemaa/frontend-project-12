@@ -97,7 +97,7 @@ const SignUpPage = () => {
                         <Form.Control
                           name="username"
                           type="text"
-                          placeholder={t('forms.username')}
+                          placeholder={t('forms.newUsername')}
                           autoComplete="username"
                           required
                           onChange={formik.handleChange}
@@ -106,7 +106,7 @@ const SignUpPage = () => {
                             || signUpFailed}
                           ref={inputRef}
                         />
-                        <Form.Label>{t('forms.username')}</Form.Label>
+                        <Form.Label>{t('forms.newUsername')}</Form.Label>
                         <Form.Control.Feedback type="invalid">
                           {handleExisting()}
                           {formik.errors.username}

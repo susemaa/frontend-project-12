@@ -33,6 +33,7 @@ export default {
     forms: {
       login: 'Войти',
       username: 'Ваш ник',
+      newUsername: 'Имя пользователя',
       password: 'Пароль',
       passwordConfirmation: 'Подтверждение пароля',
       invalidLogin: 'Неверные имя пользователя или пароль',
