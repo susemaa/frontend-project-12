@@ -15,7 +15,7 @@ const RemoveChannelModal = ({ onHide, modalInfo }) => {
 
   const handleRemove = async () => {
     try {
-        await socket.removeChannel({ id });
+      await socket.removeChannel({ id });
       if (currentChannelId === id) {
         const defaultId = 1;
         dispatch(actions.setCurrentChannel(defaultId));

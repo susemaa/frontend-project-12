@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import io from 'socket.io-client';
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, Provider } from 'react-redux';
@@ -6,10 +6,9 @@ import i18next from 'i18next';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
 import { Provider as ErrorProvider, ErrorBoundary } from '@rollbar/react';
-import { actions } from './slices/index.js';
+import reducer, { actions } from './slices/index.js';
 import { SocketContext } from './contexts/index.jsx';
 import App from './App.jsx';
-import reducer from './slices/index.js';
 import resources from './locales/index.js';
 
 const SocketProvider = ({ children }) => {
@@ -29,32 +28,32 @@ const SocketProvider = ({ children }) => {
     dispatch(actions.renameChannel(payload));
   });
 
-  const promisify = (...args) => new Promise((resolve, reject) => {
+  const promisify = useCallback((...args) => new Promise((resolve, reject) => {
     webSocket.emit(...args, (response) => {
       if (response.status === 'ok') {
         resolve(response.data);
       }
       reject();
-    })
-  });
+    });
+  }), [webSocket]);
 
-  const sendMessage = (message) => promisify('newMessage', message);
-  const newChannel = (channelName) => promisify('newChannel', channelName);
-  const removeChannel = (channel) => promisify('removeChannel', channel);
-  const renameChannel = (channel) => promisify('renameChannel', channel);
+  const sendMessage = useCallback((message) => promisify('newMessage', message), [promisify]);
+  const newChannel = useCallback((channelName) => promisify('newChannel', channelName), [promisify]);
+  const removeChannel = useCallback((channel) => promisify('removeChannel', channel), [promisify]);
+  const renameChannel = useCallback((channel) => promisify('renameChannel', channel), [promisify]);
 
-  const socketServices = {
+  const socketServices = useMemo(() => ({
     sendMessage,
     newChannel,
     removeChannel,
     renameChannel,
-  };
+  }), [sendMessage, newChannel, removeChannel, renameChannel]);
 
   return (
     <SocketContext.Provider value={socketServices}>
       {children}
     </SocketContext.Provider>
-  )
+  );
 };
 
 const init = async () => {
@@ -69,18 +68,18 @@ const init = async () => {
     .use(initReactI18next)
     .init({
       resources,
-      fallbackLng: 'ru', 
+      fallbackLng: 'ru',
       interpolation: {
         escapeValue: false, // экранирование уже есть в React, поэтому отключаем
       },
     });
 
   const rollbarConfig = {
-    //accessToken: process.env.ROLLBAR_TOKEN,
+    // accessToken: process.env.ROLLBAR_TOKEN,
     accessToken: '0d2ae09342e34ff4aab7abb63ff462c2',
     environment: 'production',
   };
-    
+
   return (
     <ErrorProvider config={rollbarConfig}>
       <ErrorBoundary>
@@ -93,7 +92,7 @@ const init = async () => {
         </Provider>
       </ErrorBoundary>
     </ErrorProvider>
-  )
+  );
 };
 
 export default init;

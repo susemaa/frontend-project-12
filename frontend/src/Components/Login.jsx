@@ -41,7 +41,6 @@ const LoginPage = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      console.log(values);
       const { username, password } = values;
       try {
         const res = await axios.post(routes.login(), { username, password });

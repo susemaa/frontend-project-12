@@ -32,7 +32,7 @@ const MainPage = () => {
     };
 
     getData();
-  }, [auth, dispatch]);
+  }, [auth, dispatch, t]);
 
   if (channelsInfo.loading) {
     return (
