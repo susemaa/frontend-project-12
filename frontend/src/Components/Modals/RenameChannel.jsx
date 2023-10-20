@@ -8,12 +8,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useSocket } from '../../hooks/index.jsx';
 import { actions } from '../../slices/index.js';
 
-const channelValidationSchema = (channelsNames) => yup.object().shape({
+const channelValidationSchema = (channelsNames, t) => yup.object().shape({
   name: yup.string()
     .trim()
-    .required('New channel name is required')
-    .min(3, 'Channel name must have at least 3 chars')
-    .max(20, 'Channel name must have less than 20 chars ')
+    .required(t('validation.required'))
+    .min(3, t('validation.min'))
+    .max(20, t('validation.max'))
     .notOneOf(channelsNames),
 });
 
@@ -31,7 +31,7 @@ const RemoveChannelModal = ({ onHide, modalInfo }) => {
 
   const formik = useFormik({
     initialValues: {
-      name: t('channels.channelsName'),
+      name: '',
     },
     onSubmit: async ({ name }) => {
       try {
@@ -48,7 +48,7 @@ const RemoveChannelModal = ({ onHide, modalInfo }) => {
         toast.error(t('toast.unknownError'));
       }
     },
-    validationSchema: channelValidationSchema(channelsNames),
+    validationSchema: channelValidationSchema(channelsNames, t),
   });
 
   return (
@@ -56,12 +56,13 @@ const RemoveChannelModal = ({ onHide, modalInfo }) => {
       <Modal.Header closeButton>
         <Modal.Title>{t('channels.renameChannel')}</Modal.Title>
       </Modal.Header>
-      <Form onSubmit={formik.handleSubmit}>
-        <Modal.Body>
+      <Modal.Body>
+        <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
             <Form.Control
               className="mb-2"
               name="name"
+              id="name"
               placeholder={t('channels.channelsName')}
               ref={inputRef}
               required
@@ -82,8 +83,8 @@ const RemoveChannelModal = ({ onHide, modalInfo }) => {
               </Button>
             </div>
           </Form.Group>
-        </Modal.Body>
-      </Form>
+        </Form>
+      </Modal.Body>
     </Modal>
   );
 };

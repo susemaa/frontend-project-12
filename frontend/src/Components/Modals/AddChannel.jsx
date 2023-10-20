@@ -56,12 +56,13 @@ const AddChannelModal = ({ onHide }) => {
       <Modal.Header closeButton>
         <Modal.Title>{t('channels.addChannel')}</Modal.Title>
       </Modal.Header>
-      <Form onSubmit={formik.handleSubmit}>
-        <Modal.Body>
+      <Modal.Body>
+        <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
             <Form.Control
               className="mb-2"
               name="name"
+              id="name"
               placeholder={t('channels.channelsName')}
               ref={inputRef}
               required
@@ -82,8 +83,8 @@ const AddChannelModal = ({ onHide }) => {
               </Button>
             </div>
           </Form.Group>
-        </Modal.Body>
-      </Form>
+        </Form>
+      </Modal.Body>
     </Modal>
   );
 };
