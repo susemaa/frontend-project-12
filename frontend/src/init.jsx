@@ -78,7 +78,7 @@ const init = async () => {
   const rollbarConfig = {
     accessToken: process.env.ROLLBAR,
     environment: 'production',
-  }
+  };
     
   return (
     <ErrorProvider config={rollbarConfig}>
@@ -87,6 +87,7 @@ const init = async () => {
           <I18nextProvider i18n={i18n}>
             <SocketProvider>
               <App />
+              <TestError />
             </SocketProvider>
           </I18nextProvider>
         </Provider>
