@@ -20,7 +20,10 @@ const MainPage = () => {
     const getData = async () => {
       const header = { Authorization: `Bearer ${auth.user.token}` };
       dispatch(actions.getData(header)).catch((err) => {
-        auth.logOut();
+        if (err.response.status === 401) {
+          auth.logOut();
+          return;
+        }
         if (err.isAxiosError) {
           toast.error(t('toast.networkError'));
           return;
