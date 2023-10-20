@@ -79,6 +79,8 @@ const init = async () => {
     accessToken: process.env.ROLLBAR,
     environment: 'production',
   };
+
+  console.log(rollbarConfig.accessToken);
     
   return (
     <ErrorProvider config={rollbarConfig}>
