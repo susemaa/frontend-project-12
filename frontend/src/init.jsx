@@ -87,7 +87,6 @@ const init = async () => {
           <I18nextProvider i18n={i18n}>
             <SocketProvider>
               <App />
-              <TestError />
             </SocketProvider>
           </I18nextProvider>
         </Provider>
