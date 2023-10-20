@@ -8,7 +8,6 @@ const getData = createAsyncThunk(
   async (header, { rejectWithValue }) => {
     try {
       const response = await axios.get(routes.data(), { headers: header });
-      console.log(response.data);
       return response.data;
     } catch (err) {
       return rejectWithValue(err);

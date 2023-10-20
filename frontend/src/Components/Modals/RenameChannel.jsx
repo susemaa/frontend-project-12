@@ -62,7 +62,7 @@ const RemoveChannelModal = ({ onHide, modalInfo }) => {
             <Form.Control
               className="mb-2"
               name="name"
-              placeholder={t('channels.newChannelName')}
+              placeholder={t('channels.channelsName')}
               ref={inputRef}
               required
               onChange={formik.handleChange}
