@@ -39,7 +39,7 @@ const Channels = () => {
           <b>{t('channels.channels')}</b>
           <Button className="p-0 text-primary rounded-0 border-0 bg-transparent" variant="outline-primary" onClick={() => openModal('add')}>
             <BsPlusSquare />
-            <span className="visually-hidden">{t('channels.addChannel')}</span>
+            <span className="visually-hidden">+</span>
           </Button>
         </div>
         <Nav
