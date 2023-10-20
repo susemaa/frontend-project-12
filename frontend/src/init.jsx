@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, Provider } from 'react-redux';
 import i18next from 'i18next';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
+import { ToastContainer } from 'react-toastify';
 import { actions } from './slices/index.js';
 import { SocketContext } from './contexts/index.jsx';
 import App from './App.jsx';

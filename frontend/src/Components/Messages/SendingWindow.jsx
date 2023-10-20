@@ -4,6 +4,7 @@ import {
   Form, Button, InputGroup, Container,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { BsArrowRightSquare } from 'react-icons/bs';
 import { useAuth, useSocket } from '../../hooks/index.jsx';
 
@@ -27,7 +28,11 @@ const SendingWindow = ({ currentChannel }) => {
         await socket.sendMessage(message);
         formik.values.text = '';
       } catch (err) {
-        console.log(err);
+        if (err.isAxiosError) {
+          toast.error(t('toast.networkError'));
+          return;
+        }
+        toast.error(t('toast.unknownError'));
       }
     },
   });

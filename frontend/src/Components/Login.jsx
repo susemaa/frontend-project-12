@@ -12,6 +12,7 @@ import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
@@ -50,7 +51,11 @@ const LoginPage = () => {
       } catch (err) {
         formik.setSubmitting(false);
         setAuthFailed(true);
-        console.log(err);
+        if (err.isAxiosError) {
+          toast.error(t('toast.networkError'));
+          return;
+        }
+        toast.error(t('toast.unknownError'));
       }
     },
   });

@@ -31,7 +31,7 @@ export default {
     },
     forms: {
       login: 'Log in',
-      username: 'Your username',
+      username: 'Username',
       password: 'Password',
       passwordConfirmation: 'Password confirnation',
       invalidLogin: 'Username or password are wrong',
@@ -46,6 +46,13 @@ export default {
       max: 'From 3 to 20 characters',
       minPassword: 'At least 6 characters',
       passwordConfirmation: 'Passwords must match',
+    },
+    toast: {
+      networkError: 'Network error',
+      unknownError: 'Unknown error',
+      channelCreated: 'Channel created',
+      channelRemoved: 'Channel removed',
+      channelRename: 'Channel renamed',
     },
   },
 };

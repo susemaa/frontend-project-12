@@ -12,6 +12,7 @@ import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
@@ -46,9 +47,17 @@ const SignUpPage = () => {
       } catch (err) {
         formik.setSubmitting(false);
         setSighUpFailed(true);
+
         if (err.response.status === 409) {
           setExistingUsernames([...existingUsernames, username]);
+          return;
         }
+
+        if (err.isAxiosError) {
+          toast.error(t('toast.networkError'));
+          return;
+        }
+        toast.error(t('toast.unknownError'));
       }
     },
     validationSchema: yup.object().shape({
@@ -66,12 +75,7 @@ const SignUpPage = () => {
     }),
   });
 
-  const handleExisting = () => {
-    if (existingUsernames.find((username) => username === formik.values.username)) {
-      return (t('validation.exists'))
-    }
-    return;
-  }
+  const handleExisting = () => (existingUsernames.find((username) => username === formik.values.username) ? t('validation.exists') : null);
 
   return (
     <Container fluid className="h-100 mt-5">

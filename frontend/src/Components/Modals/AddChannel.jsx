@@ -3,6 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSocket } from '../../hooks/index.jsx';
 import { actions } from '../../slices/index.js';
@@ -35,10 +36,15 @@ const AddChannelModal = ({ onHide }) => {
       try {
         const newChannel = await socket.newChannel({ name });
         dispatch(actions.setCurrentChannel(newChannel.id));
+        toast.success(t('toast.channelCreated'));
         onHide();
         formik.values.name = '';
       } catch (err) {
-        console.log(err);
+        if (err.isAxiosError) {
+          toast.error(t('toast.networkError'));
+          return;
+        }
+        toast.error(t('toast.unknownError'));
       }
     },
     validationSchema: channelValidationSchema(channelsNames, t),

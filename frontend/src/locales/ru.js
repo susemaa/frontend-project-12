@@ -48,5 +48,12 @@ export default {
       minPassword: 'Не менее 6 символов',
       passwordConfirmation: 'Пароли должны совпадать',
     },
+    toast: {
+      networkError: 'Ошибка соединения',
+      unknownError: 'Неизвестная ошибка',
+      channelCreated: 'Канал создан',
+      channelRemoved: 'Канал удален',
+      channelRename: 'Канал переименован',
+    },
   },
 };

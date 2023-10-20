@@ -2,6 +2,7 @@ import React, { useState, useMemo, useCallback } from 'react';
 import {
   BrowserRouter, Routes, Route, Navigate,
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Page404 from './Components/Page404.jsx';
 import MainPage from './Components/Main.jsx';
 import LoginPage from './Components/Login.jsx';
@@ -60,6 +61,7 @@ const App = () => (
         </Routes>
       </BrowserRouter>
     </div>
+    <ToastContainer />
   </AuthProvider>
 );
 

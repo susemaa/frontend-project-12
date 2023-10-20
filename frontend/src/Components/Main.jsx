@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { ImSpinner2 } from 'react-icons/im';
 import Channels from './Channels.jsx';
 import Messages from './Messages/index.jsx';
@@ -19,8 +20,12 @@ const MainPage = () => {
     const getData = async () => {
       const header = { Authorization: `Bearer ${auth.user.token}` };
       dispatch(actions.getData(header)).catch((err) => {
-        console.log('err', err);
         auth.logOut();
+        if (err.isAxiosError) {
+          toast.error(t('toast.networkError'));
+          return;
+        }
+        toast.error(t('toast.unknownError'));
       });
     };
 
