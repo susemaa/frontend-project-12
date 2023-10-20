@@ -4,7 +4,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, Provider } from 'react-redux';
 import i18next from 'i18next';
 import { initReactI18next, I18nextProvider } from 'react-i18next';
-import { ToastContainer } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
+import { Provider as ErrorProvider, ErrorBoundary } from '@rollbar/react';
 import { actions } from './slices/index.js';
 import { SocketContext } from './contexts/index.jsx';
 import App from './App.jsx';
@@ -59,6 +60,10 @@ const SocketProvider = ({ children }) => {
 const init = async () => {
   const store = configureStore({ reducer });
 
+  const ru = leoProfanity.getDictionary('ru');
+  const en = leoProfanity.getDictionary();
+  leoProfanity.add(ru, en);
+
   const i18n = i18next.createInstance();
   i18n
     .use(initReactI18next)
@@ -69,15 +74,24 @@ const init = async () => {
         escapeValue: false, // экранирование уже есть в React, поэтому отключаем
       },
     });
+
+  const rollbarConfig = {
+    accessToken: process.env.ROLLBAR,
+    environment: 'production',
+  }
     
   return (
-    <Provider store={store}>
-      <I18nextProvider i18n={i18n}>
-        <SocketProvider>
-          <App />
-        </SocketProvider>
-      </I18nextProvider>
-    </Provider>
+    <ErrorProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <I18nextProvider i18n={i18n}>
+            <SocketProvider>
+              <App />
+            </SocketProvider>
+          </I18nextProvider>
+        </Provider>
+      </ErrorBoundary>
+    </ErrorProvider>
   )
 };
 

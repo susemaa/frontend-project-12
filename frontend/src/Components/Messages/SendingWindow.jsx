@@ -5,6 +5,7 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 import { BsArrowRightSquare } from 'react-icons/bs';
 import { useAuth, useSocket } from '../../hooks/index.jsx';
 
@@ -20,7 +21,7 @@ const SendingWindow = ({ currentChannel }) => {
     },
     onSubmit: async ({ text }) => {
       const message = {
-        body: text,
+        body: leoProfanity.clean(text),
         channelId: currentChannel.id,
         username: user.username,
       };
