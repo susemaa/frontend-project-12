@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
-import signUpLogo from '../124.png';
+import signUpLogo from '../assets/124.png';
 
 const SignUpPage = () => {
   const [signUpFailed, setSighUpFailed] = useState(false);

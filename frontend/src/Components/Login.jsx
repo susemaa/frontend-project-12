@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
-import logo from '../123.png';
+import logo from '../assets/123.png';
 
 const validationSchema = yup.object({
   username: yup.string().required('Username is required'),
