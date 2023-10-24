@@ -4,10 +4,11 @@ import { Col } from 'react-bootstrap';
 import Header from './MessagesHeader.jsx';
 import SendingWindow from './SendingWindow.jsx';
 import Message from './Message.jsx';
+import selectors from '../../selectors/index.js';
 
 const Messages = () => {
-  const { channels, currentChannelId } = useSelector((s) => s.channelsInfo);
-  const { messages } = useSelector((s) => s.messagesInfo);
+  const { channels, currentChannelId } = useSelector(selectors.getChannelsInfo);
+  const { messages } = useSelector(selectors.getMessagesInfo);
   const currentChannel = channels.find((ch) => ch.id === currentChannelId);
 
   const currentMessages = messages.filter((message) => message.channelId === currentChannelId);

@@ -8,12 +8,13 @@ import Channels from './Channels.jsx';
 import Messages from './Messages/index.jsx';
 import { useAuth } from '../hooks/index.jsx';
 import { actions } from '../slices/index.js';
+import selectors from '../selectors/index.js';
 
 const MainPage = () => {
   const auth = useAuth();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const channelsInfo = useSelector((s) => s.channelsInfo);
+  const channelsInfo = useSelector(selectors.getChannelsInfo);
 
   useEffect(() => {
     const getData = async () => {

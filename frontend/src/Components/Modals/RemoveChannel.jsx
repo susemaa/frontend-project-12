@@ -5,12 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useSocket } from '../../hooks/index.jsx';
 import { actions } from '../../slices/index.js';
+import selectors from '../../selectors/index.js';
 
 const RemoveChannelModal = ({ onHide, modalInfo }) => {
   const dispatch = useDispatch();
   const socket = useSocket();
   const { t } = useTranslation();
-  const { currentChannelId } = useSelector((s) => s.channelsInfo);
+  const { currentChannelId } = useSelector(selectors.getChannelsInfo);
   const { id } = modalInfo.channel;
 
   const handleRemove = async () => {

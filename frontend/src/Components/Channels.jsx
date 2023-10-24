@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { BsPlusSquare } from 'react-icons/bs';
 import { actions } from '../slices/index.js';
 import selectModal from './Modals/index.js';
+import selectors from '../selectors/index.js';
 
 const ModalWindow = ({ modalInfo, handleClose }) => {
   if (!modalInfo.type) {
@@ -19,7 +20,7 @@ const ModalWindow = ({ modalInfo, handleClose }) => {
 
 const Channels = () => {
   const { t } = useTranslation();
-  const channelsInfo = useSelector((s) => s.channelsInfo);
+  const channelsInfo = useSelector(selectors.getChannelsInfo);
   const { channels, currentChannelId } = channelsInfo;
 
   const dispatch = useDispatch();

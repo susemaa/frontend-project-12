@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSocket } from '../../hooks/index.jsx';
 import { actions } from '../../slices/index.js';
+import selectors from '../../selectors/index.js';
 
 const channelValidationSchema = (channelsNames, t) => yup.object().shape({
   name: yup.string()
@@ -19,7 +20,8 @@ const channelValidationSchema = (channelsNames, t) => yup.object().shape({
 
 const RemoveChannelModal = ({ onHide, modalInfo }) => {
   const { t } = useTranslation();
-  const channelsNames = useSelector((s) => s.channelsInfo.channels).map((ch) => ch.name);
+  const channelsInfo = useSelector(selectors.getChannelsInfo);
+  const channelsNames = channelsInfo.channels.map((ch) => ch.name);
   const socket = useSocket();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
