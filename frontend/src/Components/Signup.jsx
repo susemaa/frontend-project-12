@@ -43,7 +43,7 @@ const SignUpPage = () => {
       try {
         const res = await axios.post(routes.signup(), { username, password });
         auth.logIn(res.data);
-        navigate('/');
+        navigate(routes.mainPage());
       } catch (err) {
         formik.setSubmitting(false);
         setSighUpFailed(true);
@@ -157,7 +157,7 @@ const SignUpPage = () => {
             <Card.Footer className="p-4">
               <div className="text-center">
                 <span className="me-1">{t('forms.haveAccount')}</span>
-                <Link to="/login">{t('forms.login')}</Link>
+                <Link to={routes.loginPage()}>{t('forms.login')}</Link>
               </div>
             </Card.Footer>
           </Card>

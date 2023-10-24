@@ -52,10 +52,10 @@ const App = () => (
       <MyNavbar />
       <BrowserRouter>
         <Routes>
-          <Route path="*" element={<Page404 />} />
-          <Route path="/" element={<PrivateRoute><MainPage /></PrivateRoute>} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="signup" element={<SignUpPage />} />
+          <Route path={routes.unknownPath()} element={<Page404 />} />
+          <Route path={routes.mainPage()} element={<PrivateRoute><MainPage /></PrivateRoute>} />
+          <Route path={routes.loginPage()} element={<LoginPage />} />
+          <Route path={routes.signupPage()} element={<SignUpPage />} />
         </Routes>
       </BrowserRouter>
     </div>
