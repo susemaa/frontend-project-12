@@ -75,8 +75,7 @@ const init = async () => {
     });
 
   const rollbarConfig = {
-    // accessToken: process.env.ROLLBAR_TOKEN,
-    accessToken: '0d2ae09342e34ff4aab7abb63ff462c2',
+    accessToken: process.env.ROLLBAR_TOKEN,
     environment: 'production',
   };
 
