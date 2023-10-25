@@ -18,7 +18,7 @@ const MainPage = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const header = { Authorization: `Bearer ${auth.user.token}` };
+      const header = auth.getAuthHeader();
       dispatch(actions.getData(header)).catch((err) => {
         if (err.response.status === 401) {
           auth.logOut();

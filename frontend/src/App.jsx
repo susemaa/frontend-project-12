@@ -20,8 +20,9 @@ const AuthProvider = ({ children }) => {
   );
 
   const logIn = useCallback((userData) => {
+    const { username, token } = userData;
     localStorage.setItem('userInfo', JSON.stringify(userData));
-    setUser({ username: userData.username, token: userData.token });
+    setUser({ username, token });
   }, []);
 
   const logOut = useCallback(() => {
@@ -29,7 +30,16 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   }, []);
 
-  const authServices = useMemo(() => ({ user, logIn, logOut }), [user, logIn, logOut]);
+  const getAuthHeader = useCallback(() => {
+    if (!user.token) {
+      return {};
+    }
+    return { Authorization: `Bearer ${user.token}` };
+  }, [user]);
+
+  const authServices = useMemo(() => ({
+    user, logIn, logOut, getAuthHeader,
+  }), [user, logIn, logOut, getAuthHeader]);
 
   return (
     <AuthContext.Provider value={authServices}>
