@@ -1,4 +1,4 @@
-# Slack-like messanger
+# Slack-like messenger
 https://frontend-project-12-production-2602.up.railway.app/
 ## Install
 ```
