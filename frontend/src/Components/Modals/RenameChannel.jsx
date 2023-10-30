@@ -20,20 +20,21 @@ const channelValidationSchema = (channelsNames, t) => yup.object().shape({
 
 const RemoveChannelModal = ({ onHide, modalInfo }) => {
   const { t } = useTranslation();
-  const channelsInfo = useSelector(selectors.getChannelsInfo);
-  const channelsNames = channelsInfo.channels.map((ch) => ch.name);
   const socket = useSocket();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const { channels } = useSelector(selectors.getChannelsInfo);
+  const channelsNames = channels.map((ch) => ch.name);
   const { id } = modalInfo.channel;
+  const chosenChannelName = modalInfo.channel.name;
 
   useEffect(() => {
-    inputRef.current.focus();
+    inputRef.current.select();
   }, []);
 
   const formik = useFormik({
     initialValues: {
-      name: '',
+      name: chosenChannelName,
     },
     onSubmit: async ({ name }) => {
       try {
