@@ -38,7 +38,8 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "airbnb"
     ]
   },
   "browserslist": {
@@ -55,6 +56,7 @@
   },
   "devDependencies": {
     "eslint": "^8.49.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-functional": "^6.0.0",
     "eslint-plugin-react": "^7.33.2"
   }
